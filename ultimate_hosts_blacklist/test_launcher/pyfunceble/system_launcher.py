@@ -146,17 +146,18 @@ class UHBPyFuncebleSystemLauncher(SystemLauncher):
         logging.info("Started generation of %r.", volatile_file.path)
 
         with volatile_file.open("w", encoding="utf-8") as volatile_file_stream:
-            with clean_file.open("r", encoding="utf-8") as clean_file_stream:
-                for line in clean_file_stream:
-                    line = line.strip()
+            if clean_file.exists():
+                with clean_file.open("r", encoding="utf-8") as clean_file_stream:
+                    for line in clean_file_stream:
+                        line = line.strip()
 
-                    if not line or line.startswith("#") or "." not in line:
-                        continue
+                        if not line or line.startswith("#") or "." not in line:
+                            continue
 
-                    if line.endswith("."):
-                        line = line[:-1]
+                        if line.endswith("."):
+                            line = line[:-1]
 
-                    volatile_file_stream.write(line + "\n")
+                        volatile_file_stream.write(line + "\n")
 
             if input_file.exists():
                 with input_file.open("r", encoding="utf-8") as input_file_stream:
