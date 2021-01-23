@@ -48,6 +48,7 @@ IP_FILENAME: str = "ip.list"
 ADMINISTRATION_FILENAME: str = "info.json"
 EXAMPLE_ADMINISTRATION_FILENAME: str = "info.example.json"
 REQUIREMENTS_FILENAME: str = "requirements.txt"
+MANIFEST_FILENAME: str = "MANIFEST.in"
 
 PYFUNCEBLE_CONFIG_DIRNAME: str = ".pyfunceble"
 

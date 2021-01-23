@@ -45,6 +45,7 @@ import PyFunceble.storage
 from PyFunceble import __version__ as pyfunceble_version
 from PyFunceble.cli.continuous_integration.utils import ci_object
 from PyFunceble.helpers.directory import DirectoryHelper
+from PyFunceble.helpers.file import FileHelper
 from PyFunceble.helpers.merge import Merge
 
 from ultimate_hosts_blacklist.test_launcher import __version__
@@ -67,7 +68,6 @@ from ultimate_hosts_blacklist.test_launcher.updater.output_files import (
 from ultimate_hosts_blacklist.test_launcher.updater.requirements import (
     RequirementsUpdater,
 )
-from PyFunceble.helpers.file import FileHelper
 
 
 def tool() -> None:
@@ -130,7 +130,7 @@ def tool() -> None:
     ci_engine = ci_object()
 
     if FileHelper(
-        os.path.join(outputs.CURRENT_DIRECTORY, outputs.EXAMPLE_ADMINISTRATION_FILENAME)
+        os.path.join(outputs.CURRENT_DIRECTORY, outputs.MANIFEST_FILENAME)
     ).exists():
         ci_engine.authorized = False
 
