@@ -67,6 +67,7 @@ from ultimate_hosts_blacklist.test_launcher.updater.output_files import (
 from ultimate_hosts_blacklist.test_launcher.updater.requirements import (
     RequirementsUpdater,
 )
+from PyFunceble.helpers.file import FileHelper
 
 
 def tool() -> None:
@@ -126,7 +127,11 @@ def tool() -> None:
 
     administration = Administration()
 
-    ci_engine = ci_object()
+    if FileHelper(outputs.EXAMPLE_ADMINISTRATION_FILENAME).exists():
+        ci_engine = ci_object(authorized=False)
+    else:
+        ci_engine = ci_object()
+
     ci_engine.init()
 
     DirectoryHelper(outputs.PYFUNCEBLE_CONFIG_DIRECTORY).create()
