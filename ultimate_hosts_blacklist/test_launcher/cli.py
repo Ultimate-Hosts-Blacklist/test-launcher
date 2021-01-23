@@ -127,7 +127,9 @@ def tool() -> None:
 
     administration = Administration()
 
-    if FileHelper(outputs.EXAMPLE_ADMINISTRATION_FILENAME).exists():
+    if FileHelper(
+        os.path.join(outputs.CURRENT_DIRECTORY, outputs.EXAMPLE_ADMINISTRATION_FILENAME)
+    ).exists():
         ci_engine = ci_object(authorized=False)
     else:
         ci_engine = ci_object()
