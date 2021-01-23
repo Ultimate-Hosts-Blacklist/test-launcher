@@ -135,16 +135,17 @@ class OutputFilesUpdater(UpdaterBase):
             [
                 RPZPolicy2Subject(x).get_converted()
                 for x in RPZInputLine2Subject(line).get_converted()
+                if x
             ]
         )
 
         result.update(
-            [y for x in result for y in Subject2Complements(x).get_converted()]
+            [y for x in result for y in Subject2Complements(x).get_converted() if x]
         )
 
-        result = [Url2Netloc(x).get_converted() for x in result]
+        result = [Url2Netloc(x).get_converted() for x in result if x]
 
-        result = [domain2idna(x) for x in result]
+        result = [domain2idna(x) for x in result if x]
 
         return result
 
