@@ -30,71 +30,75 @@ License:
     SOFTWARE.
 """
 
-from re import compile as comp
-from re import sub as substring
+import os
+import re
+from typing import List
 
-from setuptools import setup
+from setuptools import setup, find_namespace_packages
 
 NAMESPACE = "ultimate_hosts_blacklist"
-MODULE = "input_repo_updater"
+MODULE = "test_launcher"
 
-PYPI_NAME = substring(r"_", r"-", "{0}-{1}".format(NAMESPACE, MODULE))
+PYPI_NAME = re.sub(r"_", r"-", "{0}-{1}".format(NAMESPACE, MODULE))
 
 
-def _get_requirements():
+def get_requirements() -> List[str]:
     """
     Extract all requirements from requirements.txt.
     """
 
-    with open("requirements.txt") as file:
-        requirements = file.read().splitlines()
+    result = set()
+    with open("requirements.txt") as file_stream:
+        for line in file_stream:
+            line = line.strip()
 
-    return [x for x in requirements if "PyFunceble" not in x]
+            if line.startswith("#"):
+                continue
+
+            if "#" in line:
+                line = line[: line.find("#")]
+
+            line = line.strip()
+
+            if not line:
+                continue
+
+            result.add(line)
+
+    return list(result)
 
 
-def _get_version():
+def get_version() -> str:
     """
     Extract the version from ultimate_hosts_blacklist/MODULE/__init__.py
     """
 
-    to_match = comp(r'VERSION\s=\s"(.*)"\n')
-    extracted = to_match.findall(
-        open(
-            "ultimate_hosts_blacklist/{0}/__init__.py".format(MODULE), encoding="utf-8"
-        ).read()
-    )[0]
-
-    return ".".join(list(filter(lambda x: x.isdigit(), extracted.split("."))))
+    with open(os.path.join(NAMESPACE, MODULE, "__init__.py")) as file_stream:
+        to_match = re.compile(r'__version__\s=\s"(.*)"')
+        return to_match.findall(file_stream.read())[0]
 
 
-def _get_long_description():  # pragma: no cover
+def get_long_description():  # pragma: no cover
     """
     This function return the long description.
     """
 
-    return open("README.rst", encoding="utf-8").read()
+    with open("README.rst", encoding="utf-8") as file_stream:
+        return file_stream.read()
 
 
 if __name__ == "__main__":
     setup(
         name=PYPI_NAME,
-        version=_get_version(),
-        install_requires=_get_requirements(),
-        description="The tool to update the input source "
-        "repositories of the Ultimate-Hosts-Blacklist project.",
-        long_description=_get_long_description(),
+        version=get_version(),
+        install_requires=get_requirements(),
+        description="The test launcher of the Ultimate-Hosts-Blacklist project.",
+        long_description=get_long_description(),
         license="MIT",
         url="https://github.com/Ultimate-Hosts-Blacklist/dev-center/tree/input-repo-updater",
         platforms=["any"],
-        packages=[
-            "ultimate_hosts_blacklist.{0}".format(MODULE),
-            "ultimate_hosts_blacklist.{0}.cleaner".format(MODULE),
-            "ultimate_hosts_blacklist.{0}.config".format(MODULE),
-            "ultimate_hosts_blacklist.{0}.installer".format(MODULE),
-            "ultimate_hosts_blacklist.{0}.tester".format(MODULE),
-            "ultimate_hosts_blacklist.{0}.updater".format(MODULE),
-        ],
-        keywords=["Python", "hosts", "hosts file"],
+        packages=find_namespace_packages(),
+        keywords=["Ultimate Hosts Blacklist", "PyFunceble", "launcher"],
         classifiers=[
             "Environment :: Console",
             "Topic :: Internet",
@@ -106,14 +110,9 @@ if __name__ == "__main__":
         ],
         entry_points={
             "console_scripts": [
-                "uhb_input_repo_updater=ultimate_hosts_blacklist.{0}:_command_line".format(
-                    MODULE
-                ),
-                "uhb-input-repo-updater=ultimate_hosts_blacklist.{0}:_command_line".format(
-                    MODULE
-                ),
-                "ultimate-hosts-blacklist-input-repo-updater="
-                "ultimate_hosts_blacklist.{0}:_command_line".format(MODULE),
+                f"uhb-test-launcher=ultimate_hosts_blacklist.{MODULE}.cli:tool",
+                "ultimate-hosts-blacklist-test-launcher="
+                f"ultimate_hosts_blacklist.{MODULE}.cli:tool"
             ]
         },
     )

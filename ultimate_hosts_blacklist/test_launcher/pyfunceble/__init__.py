@@ -1,42 +1,16 @@
-Test Launcher
-=============
-
+"""
 The test launcher of the Ultimate-Hosts-Blacklist project.
 
-Installation
-------------
+This is the package that provides some extensions or modification to PyFunceble's
+implementations.
 
+
+Author:
+    Nissar Chababy, @funilrys, contactTATAfunilrysTODTODcom
+
+License:
 ::
 
-    $ pip3 install --user ultimate-hosts-blacklist-test-launcher
-
-
-
-Usage
------
-
-The launcher can be called as :code:`uhb-test-launcher` or
-:code:`ultimate-hosts-blacklist-test-launcher`
-
-::
-
-   usage: ultimate-hosts-blacklist-test-launcher [-h] [-d] [-w WORKERS] [-v]
-
-    The test launcher of the Ultimate-Hosts-Blacklist project.
-
-    optional arguments:
-        -h, --help            show this help message and exit
-        -d, --debug           Activates the debug mode.
-        -w WORKERS, --workers WORKERS
-                                Sets the number of workers to use.
-        -v, --version         Show the version end exist.
-
-    Crafted with ♥ by Nissar Chababy (Funilrys)
-
-License
--------
-
-::
 
     MIT License
 
@@ -61,3 +35,4 @@ License
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
+"""

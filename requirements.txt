@@ -1,6 +1,2 @@
-colorama
-domain2idna
-PyFunceble
-pyyaml
-ultimate-hosts-blacklist-helpers>=1.20.1
-ultimate-hosts-blacklist-whitelist
+PyFunceble-dev>=4.0.0a1
+ultimate-hosts-blacklist-whitelist-dev

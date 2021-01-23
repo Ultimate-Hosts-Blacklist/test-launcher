@@ -1,42 +1,14 @@
-Test Launcher
-=============
-
+"""
 The test launcher of the Ultimate-Hosts-Blacklist project.
 
-Installation
-------------
+This is the module that provides the base of all updater.
 
+Author:
+    Nissar Chababy, @funilrys, contactTATAfunilrysTODTODcom
+
+License:
 ::
 
-    $ pip3 install --user ultimate-hosts-blacklist-test-launcher
-
-
-
-Usage
------
-
-The launcher can be called as :code:`uhb-test-launcher` or
-:code:`ultimate-hosts-blacklist-test-launcher`
-
-::
-
-   usage: ultimate-hosts-blacklist-test-launcher [-h] [-d] [-w WORKERS] [-v]
-
-    The test launcher of the Ultimate-Hosts-Blacklist project.
-
-    optional arguments:
-        -h, --help            show this help message and exit
-        -d, --debug           Activates the debug mode.
-        -w WORKERS, --workers WORKERS
-                                Sets the number of workers to use.
-        -v, --version         Show the version end exist.
-
-    Crafted with ♥ by Nissar Chababy (Funilrys)
-
-License
--------
-
-::
 
     MIT License
 
@@ -61,3 +33,49 @@ License
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
+"""
+
+import functools
+from typing import Optional
+
+from ultimate_hosts_blacklist.test_launcher.administration import Administration
+
+
+class UpdaterBase:
+    """
+    This is the base of all update.
+    """
+
+    administration: Optional[Administration] = None
+
+    def __init__(self, administration: Administration) -> None:
+        self.administration = administration
+
+    def execute_if_authorized(func):
+        """
+        Launches the decorated method only if we are authorized to process.
+        """
+
+        @functools.wraps(func)
+        def wrapper(self, *args, **kwargs):
+            if self.authorized:
+                return func(self, *args, **kwargs)
+            return None
+
+        return wrapper
+
+    @property
+    def authorized(self) -> bool:
+        """
+        Provides the authorization to launch.
+        """
+
+        return False
+
+    @execute_if_authorized
+    def start(self) -> "UpdaterBase":
+        """
+        Starts the update process.
+        """
+
+        raise NotImplementedError()

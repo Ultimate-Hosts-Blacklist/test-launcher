@@ -1,42 +1,15 @@
-Test Launcher
-=============
-
+"""
 The test launcher of the Ultimate-Hosts-Blacklist project.
 
-Installation
-------------
+This is the module that overwrites some of of the methods of the official
+PyFunceble producer.
 
+Author:
+    Nissar Chababy, @funilrys, contactTATAfunilrysTODTODcom
+
+License:
 ::
 
-    $ pip3 install --user ultimate-hosts-blacklist-test-launcher
-
-
-
-Usage
------
-
-The launcher can be called as :code:`uhb-test-launcher` or
-:code:`ultimate-hosts-blacklist-test-launcher`
-
-::
-
-   usage: ultimate-hosts-blacklist-test-launcher [-h] [-d] [-w WORKERS] [-v]
-
-    The test launcher of the Ultimate-Hosts-Blacklist project.
-
-    optional arguments:
-        -h, --help            show this help message and exit
-        -d, --debug           Activates the debug mode.
-        -w WORKERS, --workers WORKERS
-                                Sets the number of workers to use.
-        -v, --version         Show the version end exist.
-
-    Crafted with ♥ by Nissar Chababy (Funilrys)
-
-License
--------
-
-::
 
     MIT License
 
@@ -61,3 +34,30 @@ License
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
+"""
+
+from typing import Any, Optional, Tuple
+
+from PyFunceble.cli.processes.workers.producer import ProducerWorker
+from PyFunceble.helpers.file import FileHelper
+
+from ultimate_hosts_blacklist.test_launcher.defaults import outputs
+
+
+class UHBPyFuncebleProducerWorker(ProducerWorker):
+    def target(self, consumed: Any) -> Optional[Tuple[Any, ...]]:
+        result = super().target(consumed)
+
+        if result is not None:
+            test_dataset, test_result = result
+
+            if (
+                hasattr(test_result, "status_after_extra_rules")
+                and test_result.status_after_extra_rules is not None
+            ):
+
+                FileHelper(outputs.TEMP_VOLATIVE_DESTINATION).write(
+                    test_result.idna_subject
+                )
+
+        return result
