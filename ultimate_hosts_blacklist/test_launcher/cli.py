@@ -127,15 +127,12 @@ def tool() -> None:
 
     administration = Administration()
 
+    ci_engine = ci_object()
+
     if FileHelper(
         os.path.join(outputs.CURRENT_DIRECTORY, outputs.EXAMPLE_ADMINISTRATION_FILENAME)
     ).exists():
-        ci_engine = ci_object(authorized=False)
-    else:
-        ci_engine = ci_object()
-
-    logging.info("CI Engine: %r", ci_engine)
-    logging.info("CI Engine authorized ? %r", ci_engine.authorized)
+        ci_engine.authorized = False
 
     ci_engine.init()
 
