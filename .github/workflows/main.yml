@@ -69,6 +69,7 @@ jobs:
 
       - name: Launch the launcher
         run: |
+          unset GITHUB_ACTIONS
           ultimate-hosts-blacklist-test-launcher
 
   deploy_pypi:
