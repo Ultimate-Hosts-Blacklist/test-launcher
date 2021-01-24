@@ -43,9 +43,7 @@ import colorama
 import PyFunceble.facility
 import PyFunceble.storage
 from PyFunceble import __version__ as pyfunceble_version
-from PyFunceble.cli.continuous_integration.utils import ci_object
 from PyFunceble.helpers.directory import DirectoryHelper
-from PyFunceble.helpers.file import FileHelper
 from PyFunceble.helpers.merge import Merge
 
 from ultimate_hosts_blacklist.test_launcher import __version__

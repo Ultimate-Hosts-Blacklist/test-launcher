@@ -81,7 +81,9 @@ class UHBPyFuncebleSystemLauncher(SystemLauncher):
         self.producer_process_manager.WORKER_OBJ = UHBPyFuncebleProducerWorker
 
         logging.debug("CI Engine: %r", self.continuous_integration)
-        logging.debug("CI Engine authorized ? %r", self.continuous_integration.authorized)
+        logging.debug(
+            "CI Engine authorized ? %r", self.continuous_integration.authorized
+        )
 
     def update_clean_list(self) -> "UHBPyFuncebleSystemLauncher":
         """
