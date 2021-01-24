@@ -134,6 +134,9 @@ def tool() -> None:
     ).exists():
         ci_engine.authorized = False
 
+    logging.info("CI Engine: %r", ci_engine)
+    logging.info("CI Engine authorized ? %r", ci_engine.authorized)
+
     ci_engine.init()
 
     DirectoryHelper(outputs.PYFUNCEBLE_CONFIG_DIRECTORY).create()
