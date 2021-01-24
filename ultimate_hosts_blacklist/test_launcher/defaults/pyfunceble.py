@@ -36,6 +36,8 @@ License:
     SOFTWARE.
 """
 
+from PyFunceble.cli.continuous_integration.github_actions import GitHubActions
+
 LINKS_STABLE: dict = {
     "license": {
         "link": "https://raw.githubusercontent.com/funilrys/PyFunceble/master/LICENSE",
@@ -62,10 +64,10 @@ CONFIGURATION = {
         "preload_file": True,
         "cooldown_time": 3.0,
         "ci": {
-            "active": False,
+            "active": GitHubActions().guess_all_settings().authorized,
             "commit_message": "[Autosave] Testing for Ultimate Hosts Blacklist",
             "end_commit_message": "[Results] Testing for Ultimate Hosts Blacklist",
-            "max_exec_minutes": 15,
+            "max_exec_minutes": 20,
         },
         "file_generation": {"hosts": True, "plain": True},
         "display_mode": {
