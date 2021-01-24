@@ -20,18 +20,17 @@ The launcher can be called as :code:`uhb-test-launcher` or
 
 ::
 
-   usage: ultimate-hosts-blacklist-test-launcher [-h] [-d] [-w WORKERS] [-v]
+   usage: ultimate-hosts-blacklist-test-launcher [-h] [-d] [-v]
 
     The test launcher of the Ultimate-Hosts-Blacklist project.
 
     optional arguments:
-        -h, --help            show this help message and exit
-        -d, --debug           Activates the debug mode.
-        -w WORKERS, --workers WORKERS
-                                Sets the number of workers to use.
-        -v, --version         Show the version end exist.
+        -h, --help     show this help message and exit
+        -d, --debug    Activates the debug mode.
+        -v, --version  Show the version end exist.
 
     Crafted with ♥ by Nissar Chababy (Funilrys)
+
 
 License
 -------
