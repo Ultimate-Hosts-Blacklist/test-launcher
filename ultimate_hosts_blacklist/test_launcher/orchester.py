@@ -37,7 +37,6 @@ License:
 
 from typing import Optional
 
-from PyFunceble.cli.continuous_integration.base import ContinuousIntegrationBase
 from PyFunceble.cli.processes.producer import ProducerProcessesManager
 from PyFunceble.cli.processes.tester import TesterProcessesManager
 from PyFunceble.downloader.ipv4_reputation import IPV4ReputationDownloader
@@ -72,7 +71,6 @@ class Orchestration:
     }
 
     administration: Optional[Administration] = None
-    continuous_integration: Optional[ContinuousIntegrationBase] = None
 
     tester_process_manager: Optional[TesterProcessesManager] = None
     producer_process_manager: Optional[ProducerProcessesManager] = None
@@ -80,10 +78,8 @@ class Orchestration:
     def __init__(
         self,
         administration: Administration,
-        continuous_integration: ContinuousIntegrationBase,
     ) -> None:
         self.administration = administration
-        self.continuous_integration = continuous_integration
 
         self.system_launcher = UHBPyFuncebleSystemLauncher(
             administration=self.administration

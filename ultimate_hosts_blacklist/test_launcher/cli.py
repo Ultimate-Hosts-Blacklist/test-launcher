@@ -119,18 +119,6 @@ def tool() -> None:
 
     administration = Administration()
 
-    ci_engine = ci_object()
-
-    if FileHelper(
-        os.path.join(outputs.CURRENT_DIRECTORY, outputs.MANIFEST_FILENAME)
-    ).exists():
-        ci_engine.authorized = False
-
-    logging.info("CI Engine: %r", ci_engine)
-    logging.info("CI Engine authorized ? %r", ci_engine.authorized)
-
-    ci_engine.init()
-
     DirectoryHelper(outputs.PYFUNCEBLE_CONFIG_DIRECTORY).create()
 
     PyFunceble.storage.CONFIG_DIRECTORY = outputs.PYFUNCEBLE_CONFIG_DIRECTORY
@@ -162,7 +150,6 @@ def tool() -> None:
 
         Orchestration(
             administration=administration,
-            continuous_integration=ci_engine,
         ).start()
 
     administration.save()
