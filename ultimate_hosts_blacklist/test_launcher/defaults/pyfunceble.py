@@ -66,7 +66,7 @@ CONFIGURATION = {
             "end_commit_message": "[Results] Testing for Ultimate Hosts Blacklist",
             "max_exec_minutes": 15,
         },
-        "file_generation": {"hosts": True},
+        "file_generation": {"hosts": True, "plain": True},
         "display_mode": {
             "all": False,
             "dots": True,
