@@ -95,7 +95,11 @@ if __name__ == "__main__":
         description="The test launcher of the Ultimate-Hosts-Blacklist project.",
         long_description=get_long_description(),
         license="MIT",
-        url="https://github.com/Ultimate-Hosts-Blacklist/dev-center/tree/input-repo-updater",
+        url="https://github.com/Ultimate-Hosts-Blacklist/test-launcher",
+        project_urls={
+            "Source": "https://github.com/Ultimate-Hosts-Blacklist/test-launcher",
+            "Tracker": "https://github.com/Ultimate-Hosts-Blacklist/test-launcher/issues",
+        },
         platforms=["any"],
         packages=find_namespace_packages(),
         keywords=["Ultimate Hosts Blacklist", "PyFunceble", "launcher"],
@@ -112,7 +116,7 @@ if __name__ == "__main__":
             "console_scripts": [
                 f"uhb-test-launcher=ultimate_hosts_blacklist.{MODULE}.cli:tool",
                 "ultimate-hosts-blacklist-test-launcher="
-                f"ultimate_hosts_blacklist.{MODULE}.cli:tool"
+                f"ultimate_hosts_blacklist.{MODULE}.cli:tool",
             ]
         },
     )
