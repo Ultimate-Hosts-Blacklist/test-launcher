@@ -246,6 +246,12 @@ class OutputFilesUpdater(UpdaterBase):
         except KeyError:
             pass
 
+        try:
+            # Safety.
+            to_write.remove("")
+        except KeyError:
+            pass
+
         logging.info("Started to update: %r", self.final_destination)
         FileHelper(self.final_destination).write(
             "\n".join(sorted(to_write, key=standard_sorting)) + "\n", overwrite=True
