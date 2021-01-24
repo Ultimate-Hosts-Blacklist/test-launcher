@@ -60,6 +60,7 @@ CONFIGURATION = {
         "whois_db": True,
         "autocontinue": True,
         "preload_file": True,
+        "cooldown_time": 3.0,
         "ci": {
             "active": False,
             "commit_message": "[Autosave] Testing for Ultimate Hosts Blacklist",
