@@ -35,20 +35,14 @@ License:
     SOFTWARE.
 """
 
-import logging
-import multiprocessing
-import os
 from typing import Optional
 
 from PyFunceble.cli.continuous_integration.base import ContinuousIntegrationBase
 from PyFunceble.cli.processes.producer import ProducerProcessesManager
 from PyFunceble.cli.processes.tester import TesterProcessesManager
-from PyFunceble.cli.utils.testing import get_destination_from_origin
 from PyFunceble.downloader.ipv4_reputation import IPV4ReputationDownloader
-from PyFunceble.helpers.file import FileHelper
 
 from ultimate_hosts_blacklist.test_launcher.administration import Administration
-from ultimate_hosts_blacklist.test_launcher.defaults import outputs
 from ultimate_hosts_blacklist.test_launcher.pyfunceble.system_launcher import (
     UHBPyFuncebleSystemLauncher,
 )
@@ -77,8 +71,6 @@ class Orchestration:
         "session_id": None,
     }
 
-    sync_manager: Optional[multiprocessing.Manager] = None
-
     administration: Optional[Administration] = None
     continuous_integration: Optional[ContinuousIntegrationBase] = None
 
@@ -89,102 +81,13 @@ class Orchestration:
         self,
         administration: Administration,
         continuous_integration: ContinuousIntegrationBase,
-        max_workers: Optional[int] = None,
     ) -> None:
         self.administration = administration
         self.continuous_integration = continuous_integration
 
-        self.sync_manager = multiprocessing.Manager()
-
-        max_workers = (
-            max_workers - 1
-            if max_workers is not None
-            else TesterProcessesManager.STD_MAX_WORKER + 1
-        )
-
-        self.tester_process_manager = TesterProcessesManager(
-            self.sync_manager,
-            max_worker=max_workers,
-            continuous_integration=self.continuous_integration,
-            daemon=True,
-        )
-
-        self.producer_process_manager = ProducerProcessesManager(
-            self.sync_manager,
-            max_worker=1,
-            input_queue=self.tester_process_manager.output_queue,
-            continuous_integration=self.continuous_integration,
-            daemon=True,
-        )
-
         self.system_launcher = UHBPyFuncebleSystemLauncher(
             administration=self.administration
         )
-
-    def start_all_process_manager(self) -> "Orchestration":
-        """
-        Starts all our process manager.
-        """
-
-        logging.debug("Started launch of tester proc manager.")
-
-        self.tester_process_manager.send_feeding_signal(worker_name="main")
-        self.tester_process_manager.start()
-
-        logging.debug("Finished launch of tester proc manager.")
-
-        logging.debug("Started launch of producer proc manager.")
-        self.producer_process_manager.start()
-        logging.debug("Finished launch of producer proc manager.")
-
-        return self
-
-    def wait_for_all_process_manager(self) -> "Orchestration":
-        """
-        Wait for all process manager to finish.
-        """
-
-        self.tester_process_manager.wait()
-
-        self.producer_process_manager.wait()
-
-        return self
-
-    def fill_queues_with_protocol(self) -> "Orchestration":
-        """
-        Waits for the queues with protocol.
-        """
-
-        protocol_base = dict(self.STD_PROTOCOL)
-
-        protocol_base["type"] = "files"
-        protocol_base["subject_type"] = "domain"
-        protocol_base["destination"] = get_destination_from_origin(
-            outputs.INPUT_DESTINATION
-        )
-        protocol_base["source"] = outputs.INPUT_DESTINATION
-        protocol_base["abs_source"] = os.path.abspath(outputs.INPUT_DESTINATION)
-        protocol_base["rel_source"] = os.path.relpath(outputs.INPUT_DESTINATION)
-        protocol_base["checker_type"] = self.administration.pyfunceble[
-            "checker_type"
-        ].upper()
-        protocol_base["session_id"] = self.administration.pyfunceble["session_id"]
-        protocol_base["output_dir"] = outputs.OUTPUT_DIRECTORY
-
-        with FileHelper(outputs.INPUT_DESTINATION).open(
-            "r", encoding="utf-8"
-        ) as file_stream:
-            for line in file_stream:
-                line = line.strip()
-                test_protocol = dict(protocol_base)
-                test_protocol["subject"] = line
-                test_protocol["idna_subject"] = line
-
-                self.tester_process_manager.add_to_input_queue(
-                    test_protocol, worker_name="main"
-                )
-
-        self.tester_process_manager.send_stop_signal(worker_name="main")
 
     def start(self) -> "Orchestration":
         """

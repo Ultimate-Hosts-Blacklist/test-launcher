@@ -223,24 +223,6 @@ class UHBPyFuncebleSystemLauncher(SystemLauncher):
         self.uhb_administration.save()
         return super().run_ci_saving_instructions()
 
-    def run_ci_end_saving_instructions(self) -> "SystemLauncher":
-        self.uhb_administration.currently_under_test = False
-
-        end_datetime = datetime.utcnow()
-
-        self.uhb_administration.end_epoch = (
-            self.uhb_administration.end_datetime
-        ) = end_datetime
-
-        self.uhb_administration.save()
-
-        self.update_clean_list()
-        self.update_whitelisted_list()
-        self.update_volatile_list()
-        self.update_ip_list()
-
-        return super().run_ci_end_saving_instructions()
-
     def run_standard_end_instructions(self) -> "SystemLauncher":
         self.uhb_administration.currently_under_test = False
 

@@ -92,14 +92,6 @@ def tool() -> None:
     )
 
     parser.add_argument(
-        "-w",
-        "--workers",
-        help="Sets the number of workers to use.",
-        type=int,
-        default=None,
-    )
-
-    parser.add_argument(
         "-v",
         "--version",
         help="Show the version end exist.",
@@ -171,7 +163,6 @@ def tool() -> None:
         Orchestration(
             administration=administration,
             continuous_integration=ci_engine,
-            max_workers=args.workers,
         ).start()
 
     administration.save()
