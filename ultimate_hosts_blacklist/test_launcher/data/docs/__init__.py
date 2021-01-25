@@ -1,6 +1,9 @@
 """
 The test launcher of the Ultimate-Hosts-Blacklist project.
 
+This is the package that provides our embedded docs data.
+
+
 Author:
     Nissar Chababy, @funilrys, contactTATAfunilrysTODTODcom
 
@@ -32,5 +35,3 @@ License:
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 """
-
-__version__ = "3.0.0b9"

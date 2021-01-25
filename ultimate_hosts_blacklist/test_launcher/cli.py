@@ -63,6 +63,7 @@ from ultimate_hosts_blacklist.test_launcher.updater.infrastructure_files import 
 from ultimate_hosts_blacklist.test_launcher.updater.output_files import (
     OutputFilesUpdater,
 )
+from ultimate_hosts_blacklist.test_launcher.updater.readme import ReadmeUpdater
 from ultimate_hosts_blacklist.test_launcher.updater.requirements import (
     RequirementsUpdater,
 )
@@ -145,6 +146,7 @@ def tool() -> None:
         RequirementsUpdater(administration).start()
         InfrastructureFilesUpdater(administration).start()
         OutputFilesUpdater(administration).start()
+        ReadmeUpdater(administration).start()
 
         Orchestration(
             administration=administration,

@@ -49,6 +49,7 @@ ADMINISTRATION_FILENAME: str = "info.json"
 EXAMPLE_ADMINISTRATION_FILENAME: str = "info.example.json"
 REQUIREMENTS_FILENAME: str = "requirements.txt"
 MANIFEST_FILENAME: str = "MANIFEST.in"
+README_FILENAME: str = "README.md"
 
 PYFUNCEBLE_CONFIG_DIRNAME: str = ".pyfunceble"
 

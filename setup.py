@@ -119,4 +119,5 @@ if __name__ == "__main__":
                 f"ultimate_hosts_blacklist.{MODULE}.cli:tool",
             ]
         },
+        include_package_data=True
     )
