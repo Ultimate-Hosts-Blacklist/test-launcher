@@ -78,6 +78,7 @@ ADMINISTRATION_INDEXES: Dict[str, List[str]] = {
         "last_autosave_datetime",
         "previous_stats",
         "current_stats",
+        "custom_pyfunceble_config",
     ],
 }
 
