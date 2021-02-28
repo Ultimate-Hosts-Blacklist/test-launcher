@@ -44,12 +44,20 @@ LINKS_STABLE: dict = {
         "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/LICENSE",  # noqa: E501
         "destination": "LICENSE",
     },
+    "jenkinsfile": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/Jenkinsfile",  # noqa: E501
+        "destination": "Jenkinsfile",
+    },
 }
 
 LINKS_DEV = {
     "license": {
         "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/LICENSE",  # noqa: E501
         "destination": "LICENSE",
+    },
+    "jenkinsfile": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/Jenkinsfile",  # noqa: E501
+        "destination": "Jenkinsfile",
     },
 }
 
