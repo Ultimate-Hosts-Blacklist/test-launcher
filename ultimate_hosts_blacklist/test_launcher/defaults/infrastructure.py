@@ -59,6 +59,10 @@ LINKS_DEV = {
         "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/Jenkinsfile",  # noqa: E501
         "destination": "Jenkinsfile",
     },
+    "gitattributes": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.gitattributes",  # noqa: E501
+        "destination": ".gitattributes",
+    },
 }
 
 # This is the one we are going to use.
