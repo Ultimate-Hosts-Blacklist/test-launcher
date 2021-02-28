@@ -77,9 +77,10 @@ class Authorization:
             return True
 
         if int(self.administration.days_until_next_test) >= 1:
-            until = datetime.utcnow() + timedelta(
+            until = self.administration.end_datetime + timedelta(
                 days=self.administration.days_until_next_test
             )
+
             if datetime.utcnow() >= until:
                 logging.info("Test authorized by: Restest time in the past.")
                 return True
@@ -105,7 +106,7 @@ class Authorization:
             return False
 
         if int(self.administration.days_until_next_test) >= 1:
-            if datetime.utcnow() >= datetime.utcnow() + timedelta(
+            if self.administration.end_datetime >= datetime.utcnow() + timedelta(
                 days=self.administration.days_until_next_test
             ):
                 logging.info("Cleanup authorized by: Restest time in the past.")
