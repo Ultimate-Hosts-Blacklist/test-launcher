@@ -92,6 +92,14 @@ class Administration:
     def __del__(self) -> None:
         self.save()
 
+    @property
+    def exists(self) -> bool:
+        """
+        Checks if the administration file exists.
+        """
+
+        return self.info_file_helper.exists()
+
     @staticmethod
     def convert_data_for_system(data: dict) -> dict:
         """
@@ -200,18 +208,21 @@ class Administration:
         Loads and return the content of the administration file.
         """
 
-        content = self.info_file_helper.read()
-        logging.debug("Administration file content:\n%s", content)
+        if self.info_file_helper.read():
+            content = self.info_file_helper.read()
+            logging.debug("Administration file content:\n%s", content)
 
-        return self.convert_data_for_system(
-            DictHelper().from_json(content, return_dict_on_error=False)
-        )
+            return self.convert_data_for_system(
+                DictHelper().from_json(content, return_dict_on_error=False)
+            )
+        return dict()
 
-    def save(self) -> dict:
+    def save(self) -> None:
         """
         Saves the loaded content of the administration file.
         """
 
-        DictHelper(self.convert_data_for_file(self.__our_info)).to_json_file(
-            self.info_file_location
-        )
+        if self.info_file_helper.exists():
+            DictHelper(self.convert_data_for_file(self.__our_info)).to_json_file(
+                self.info_file_location
+            )

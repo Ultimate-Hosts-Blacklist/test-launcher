@@ -118,38 +118,43 @@ def tool() -> None:
 
     administration = Administration()
 
-    DirectoryHelper(outputs.PYFUNCEBLE_CONFIG_DIRECTORY).create()
+    if administration.exists:
+        DirectoryHelper(outputs.PYFUNCEBLE_CONFIG_DIRECTORY).create()
 
-    PyFunceble.storage.CONFIG_DIRECTORY = outputs.PYFUNCEBLE_CONFIG_DIRECTORY
-    PyFunceble.facility.ConfigLoader.path_to_config = os.path.join(
-        PyFunceble.storage.CONFIG_DIRECTORY,
-        PyFunceble.storage.CONFIGURATION_FILENAME,
-    )
-
-    if administration.pyfunceble["config"] and isinstance(
-        administration.pyfunceble["config"], dict
-    ):
-        our_config = Merge(administration.pyfunceble["config"]).into(
-            pyfunceble_defaults.CONFIGURATION, strict=True
+        PyFunceble.storage.CONFIG_DIRECTORY = outputs.PYFUNCEBLE_CONFIG_DIRECTORY
+        PyFunceble.facility.ConfigLoader.path_to_config = os.path.join(
+            PyFunceble.storage.CONFIG_DIRECTORY,
+            PyFunceble.storage.CONFIGURATION_FILENAME,
         )
+
+        if administration.pyfunceble["config"] and isinstance(
+            administration.pyfunceble["config"], dict
+        ):
+            our_config = Merge(administration.pyfunceble["config"]).into(
+                pyfunceble_defaults.CONFIGURATION, strict=True
+            )
+        else:
+            our_config = pyfunceble_defaults.CONFIGURATION
+
+        PyFunceble.facility.ConfigLoader.set_custom_config(
+            our_config
+        ).set_merge_upstream(True).start()
+
+        authorization = Authorization(administration)
+
+        if authorization.launch:
+            InfrastructureCleaner().start()
+            RequirementsUpdater(administration).start()
+            InfrastructureFilesUpdater(administration).start()
+            OutputFilesUpdater(administration).start()
+            ReadmeUpdater(administration).start()
+
+            Orchestration(
+                administration=administration,
+            ).start()
+
+        administration.save()
     else:
-        our_config = pyfunceble_defaults.CONFIGURATION
-
-    PyFunceble.facility.ConfigLoader.set_custom_config(our_config).set_merge_upstream(
-        True
-    ).start()
-
-    authorization = Authorization(administration)
-
-    if authorization.launch:
-        InfrastructureCleaner().start()
-        RequirementsUpdater(administration).start()
-        InfrastructureFilesUpdater(administration).start()
-        OutputFilesUpdater(administration).start()
-        ReadmeUpdater(administration).start()
-
-        Orchestration(
-            administration=administration,
-        ).start()
-
-    administration.save()
+        logging.critical(
+            "Administration file (%r) not found.", administration.info_file_location
+        )
