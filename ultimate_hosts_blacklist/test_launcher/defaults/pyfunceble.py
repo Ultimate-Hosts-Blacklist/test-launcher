@@ -56,13 +56,13 @@ LINKS_DEV: dict = {
 LINKS: dict = dict(LINKS_DEV)
 
 CONFIGURATION = {
-    "lookup": {"timeout": 6.0, "reputation": True},
+    "lookup": {"timeout": 5.0, "reputation": False},
     "share_logs": True,
     "cli_testing": {
         "whois_db": True,
         "autocontinue": True,
         "preload_file": True,
-        "cooldown_time": 3.0,
+        "cooldown_time": 0.2,
         "ci": {
             "active": GitHubActions().guess_all_settings().authorized,
             "commit_message": "[Autosave] Testing for Ultimate Hosts Blacklist",
@@ -86,5 +86,10 @@ CONFIGURATION = {
             "reputation": False,
         },
     },
-    "dns": {"server": ["8.8.8.8", "8.8.4.4"], "protocol": "UDP"},
+    "dns": {
+        "server": ["9.9.9.10", "149.112.112.10", "2620:fe::10"],
+        "protocol": "UDP",
+        "follow_server_order": False,
+        "trust_server": True,
+    },
 }
