@@ -65,8 +65,8 @@ CONFIGURATION = {
         "preload_file": True,
         "cooldown_time": 0.2,
         "ci": {
-            "active": GitHubActions().guess_all_settings().authorized
-            or Jenkins().guess_all_settings().authorized,
+            "active": Jenkins().guess_all_settings().authorized
+            or GitHubActions().guess_all_settings().authorized,
             "commit_message": "[Autosave] Testing for Ultimate Hosts Blacklist",
             "end_commit_message": "[Results] Testing for Ultimate Hosts Blacklist",
             "max_exec_minutes": 20,
