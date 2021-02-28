@@ -36,6 +36,7 @@ License:
     SOFTWARE.
 """
 
+from os import cpu_count
 from PyFunceble.cli.continuous_integration.github_actions import GitHubActions
 from PyFunceble.cli.continuous_integration.jenkins import Jenkins
 
@@ -87,6 +88,10 @@ CONFIGURATION = {
             "syntax": False,
             "reputation": False,
         },
+        "max_workers": None
+        if not Jenkins().guess_all_settings().authorized
+        and not GitHubActions().guess_all_settings().authorized
+        else cpu_count // 2,
     },
     "dns": {
         "server": ["9.9.9.10", "149.112.112.10", "2620:fe::10"],
