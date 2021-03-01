@@ -70,7 +70,7 @@ CONFIGURATION = {
             or GitHubActions().guess_all_settings().authorized,
             "commit_message": "[Autosave] Testing for Ultimate Hosts Blacklist",
             "end_commit_message": "[Results] Testing for Ultimate Hosts Blacklist",
-            "max_exec_minutes": 20,
+            "max_exec_minutes": 10080, # 24 * 7 * 60
         },
         "file_generation": {"hosts": True, "plain": True},
         "display_mode": {
