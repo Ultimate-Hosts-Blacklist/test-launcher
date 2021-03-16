@@ -37,6 +37,7 @@ License:
 """
 
 from os import cpu_count
+
 from PyFunceble.cli.continuous_integration.github_actions import GitHubActions
 from PyFunceble.cli.continuous_integration.jenkins import Jenkins
 
@@ -63,14 +64,14 @@ CONFIGURATION = {
     "cli_testing": {
         "whois_db": True,
         "autocontinue": True,
-        "preload_file": True,
+        "preload_file": False,
         "cooldown_time": 0.2,
         "ci": {
             "active": Jenkins().guess_all_settings().authorized
             or GitHubActions().guess_all_settings().authorized,
             "commit_message": "[Autosave] Testing for Ultimate Hosts Blacklist",
             "end_commit_message": "[Results] Testing for Ultimate Hosts Blacklist",
-            "max_exec_minutes": 10080, # 24 * 7 * 60
+            "max_exec_minutes": 24 * 7 * 60,
         },
         "file_generation": {"hosts": True, "plain": True},
         "display_mode": {
