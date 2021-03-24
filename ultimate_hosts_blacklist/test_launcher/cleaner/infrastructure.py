@@ -68,6 +68,7 @@ class InfrastructureCleaner(CleanerBase):
         "user_agents.json",
         ".PyFunceble_LICENSE",
         "requirements.txt",
+        "Jenkinsfile",
     ]
 
     FILES_TO_MOVE_TO_PYFUNCEBLE_CONFIG: List[str] = ["whois_db.json"]
