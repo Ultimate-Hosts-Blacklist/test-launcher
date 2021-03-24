@@ -36,8 +36,6 @@ License:
     SOFTWARE.
 """
 
-from os import cpu_count
-
 from PyFunceble.cli.continuous_integration.github_actions import GitHubActions
 from PyFunceble.cli.continuous_integration.jenkins import Jenkins
 
