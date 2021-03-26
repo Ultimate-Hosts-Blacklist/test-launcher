@@ -62,7 +62,7 @@ CONFIGURATION = {
     "cli_testing": {
         "whois_db": True,
         "autocontinue": True,
-        "preload_file": False,
+        "preload_file": True,
         "cooldown_time": 0.2,
         "ci": {
             "active": Jenkins().guess_all_settings().authorized
