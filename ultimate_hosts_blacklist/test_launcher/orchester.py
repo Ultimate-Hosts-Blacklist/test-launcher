@@ -39,7 +39,6 @@ from typing import Optional
 
 from PyFunceble.cli.processes.producer import ProducerProcessesManager
 from PyFunceble.cli.processes.tester import TesterProcessesManager
-from PyFunceble.downloader.ipv4_reputation import IPV4ReputationDownloader
 
 from ultimate_hosts_blacklist.test_launcher.administration import Administration
 from ultimate_hosts_blacklist.test_launcher.pyfunceble.system_launcher import (
@@ -89,8 +88,6 @@ class Orchestration:
         """
         Starts the whole process of orchestration.
         """
-
-        IPV4ReputationDownloader().start()
 
         self.system_launcher.start()
 

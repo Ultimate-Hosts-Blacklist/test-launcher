@@ -69,6 +69,7 @@ class InfrastructureCleaner(CleanerBase):
         ".PyFunceble_LICENSE",
         "requirements.txt",
         "Jenkinsfile",
+        [".pyfunceble", "ipv4_reputation.data"],
     ]
 
     FILES_TO_MOVE_TO_PYFUNCEBLE_CONFIG: List[str] = ["whois_db.json"]
@@ -104,7 +105,10 @@ class InfrastructureCleaner(CleanerBase):
         del analytic_directory
 
         for file in self.FILES_TO_REMOVE:
-            file_helper = FileHelper(os.path.join(outputs.CURRENT_DIRECTORY, file))
+            if not isinstance(file, list):
+                file_helper = FileHelper(os.path.join(outputs.CURRENT_DIRECTORY, file))
+            else:
+                file_helper = FileHelper(os.path.join(outputs.CURRENT_DIRECTORY, *file))
 
             if file_helper.exists():
                 file_helper.delete()
