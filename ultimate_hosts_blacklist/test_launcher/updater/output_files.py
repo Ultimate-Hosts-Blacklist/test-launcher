@@ -40,15 +40,8 @@ import os
 import tempfile
 from typing import List, Set, Tuple, Union
 
-from domain2idna import domain2idna
 from PyFunceble.cli.utils.sort import standard as standard_sorting
-from PyFunceble.converter.adblock_input_line2subject import AdblockInputLine2Subject
-from PyFunceble.converter.input_line2subject import InputLine2Subject
-from PyFunceble.converter.rpz_input_line2subject import RPZInputLine2Subject
-from PyFunceble.converter.rpz_policy2subject import RPZPolicy2Subject
-from PyFunceble.converter.subject2complements import Subject2Complements
-from PyFunceble.converter.url2netloc import Url2Netloc
-from PyFunceble.converter.wildcard2subject import Wildcard2Subject
+from PyFunceble.cli.utils.testing import get_subjects_from_line
 from PyFunceble.helpers.download import DownloadHelper
 from PyFunceble.helpers.file import FileHelper
 from ultimate_hosts_blacklist.whitelist.core import Core as whitelist_core_tool
@@ -120,35 +113,6 @@ class OutputFilesUpdater(UpdaterBase):
 
         return kept, new
 
-    @staticmethod
-    def get_subject_from_line(line: str) -> List[str]:
-        """
-        Given a line, we provides all extracted subjects.
-        """
-
-        result = set()
-
-        result.update(AdblockInputLine2Subject(line, aggressive=True).get_converted())
-        result.update(InputLine2Subject(line).get_converted())
-        result.update([Wildcard2Subject(line).get_converted()])
-        result.update(
-            [
-                RPZPolicy2Subject(x).get_converted()
-                for x in RPZInputLine2Subject(line).get_converted()
-                if x
-            ]
-        )
-
-        result.update(
-            [y for x in result for y in Subject2Complements(x).get_converted() if x]
-        )
-
-        result = [Url2Netloc(x).get_converted() for x in result if x]
-
-        result = [domain2idna(x) for x in result if x]
-
-        return result
-
     def produce_diff(self) -> None:
         """
         Produce the difference from teh downloaded file.
@@ -178,7 +142,7 @@ class OutputFilesUpdater(UpdaterBase):
                 continue
 
             kept_kept, new_new = self.__get_diff_data(
-                current_content, self.get_subject_from_line(line)
+                current_content, get_subjects_from_line(line, "availability")
             )
 
             new.update(new_new)
