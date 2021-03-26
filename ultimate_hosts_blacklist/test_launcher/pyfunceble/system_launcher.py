@@ -189,7 +189,8 @@ class UHBPyFuncebleSystemLauncher(SystemLauncher):
 
         return self
 
-    def update_ip_list(self) -> "UHBPyFuncebleSystemLauncher":
+    @staticmethod
+    def update_ip_list() -> "UHBPyFuncebleSystemLauncher":
         """
         Updates the content of the :code:`ip.list` file.
         """

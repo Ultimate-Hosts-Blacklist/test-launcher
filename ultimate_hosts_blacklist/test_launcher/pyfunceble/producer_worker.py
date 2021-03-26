@@ -49,7 +49,7 @@ class UHBPyFuncebleProducerWorker(ProducerWorker):
         result = super().target(consumed)
 
         if result is not None:
-            test_dataset, test_result = result
+            _, test_result = result
 
             if (
                 hasattr(test_result, "status_after_extra_rules")

@@ -84,8 +84,8 @@ class Authorization:
             if datetime.utcnow() >= until:
                 logging.info("Test authorized by: Restest time in the past.")
                 return True
-            else:
-                logging.info("Test not authorized until: %s.", until.isoformat())
+
+            logging.info("Test not authorized until: %s.", until.isoformat())
 
         return False
 
@@ -111,13 +111,13 @@ class Authorization:
             ):
                 logging.info("Cleanup authorized by: Restest time in the past.")
                 return True
-            else:
-                logging.info("Cleanup not authorized by: Restest time in the future.")
-                return False
+            logging.info("Cleanup not authorized by: Restest time in the future.")
+            return False
 
         return False
 
-    def launch_marker_in_last_commit(self) -> bool:
+    @staticmethod
+    def launch_marker_in_last_commit() -> bool:
         """
         Check if the launch marker is into the last commit message.
         """
