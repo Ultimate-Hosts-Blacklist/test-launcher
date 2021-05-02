@@ -33,4 +33,4 @@ License:
     SOFTWARE.
 """
 
-__version__ = "3.0.0b26"
+__version__ = "3.0.0b27"
