@@ -36,17 +36,21 @@ License:
     SOFTWARE.
 """
 
-
+import os
 from typing import Dict, List
 
-LINKS_STABLE: dict = {
-    "license": {
-        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/LICENSE",  # noqa: E501
-        "destination": "LICENSE",
+WORKFLOW_LINKS: dict = {
+    "main": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.github/workflows/main.yml",  # noqa: E501
+        "destination": os.path.join(".github", "workflows", "main.yml"),
+    },
+    "scheduler": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.github/workflows/scheduler.yml",  # noqa: E501
+        "destination": os.path.join(".github", "workflows", "scheduler.yml"),
     },
 }
 
-LINKS_DEV = {
+CENTRAL_LINKS: dict = {
     "license": {
         "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/LICENSE",  # noqa: E501
         "destination": "LICENSE",
@@ -57,8 +61,13 @@ LINKS_DEV = {
     },
 }
 
+LINKS_STABLE: dict = {}
+
+
+LINKS_DEV: dict = {}
+
 # This is the one we are going to use.
-LINKS: dict = dict(LINKS_DEV)
+LINKS: dict = {**CENTRAL_LINKS, **LINKS_DEV}
 
 MARKERS: dict = {"launch": r"Launch\stest"}
 

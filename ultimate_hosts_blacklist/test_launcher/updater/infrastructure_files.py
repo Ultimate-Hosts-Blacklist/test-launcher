@@ -38,6 +38,8 @@ License:
 
 import logging
 import os
+import re
+import secrets
 
 from PyFunceble.helpers.download import DownloadHelper
 from PyFunceble.helpers.file import FileHelper
@@ -60,6 +62,8 @@ class InfrastructureFilesUpdater(UpdaterBase):
         """
         Provides the authorization to launch.
         """
+
+        return True
 
         return not FileHelper(
             os.path.join(
@@ -84,3 +88,37 @@ class InfrastructureFilesUpdater(UpdaterBase):
             DownloadHelper(file["link"]).download_text(destination=destination)
 
             logging.info("Updated: %r", destination)
+
+        destination = os.path.join(
+            outputs.CURRENT_DIRECTORY,
+            infrastructure.WORKFLOW_LINKS["main"]["destination"],
+        )
+        DownloadHelper(infrastructure.WORKFLOW_LINKS["main"]["link"]).download_text(
+            destination=destination
+        )
+
+        logging.info("Updated: %r", destination)
+
+        scheduled_file = os.path.join(
+            outputs.CURRENT_DIRECTORY,
+            infrastructure.WORKFLOW_LINKS["scheduler"]["destination"],
+        )
+
+        if int(secrets.token_hex(8), 16) % 3 == 0:
+            data = DownloadHelper(
+                infrastructure.WORKFLOW_LINKS["scheduler"]["link"]
+            ).download_text(destination=None)
+
+            random_minute = secrets.randbelow(59)
+            random_hour = secrets.randbelow(12)
+
+            new_data = re.sub(
+                r'cron: "\d+\s\d+\s(\*\s\*\s\*)"',
+                r'cron: "{0} {1} \1"'.format(random_minute, random_hour),
+                data,
+            )
+
+            with open(scheduled_file, "w", encoding="utf-8") as file_stream:
+                file_stream.write(new_data)
+
+                logging.info("Updated: %r", scheduled_file)
