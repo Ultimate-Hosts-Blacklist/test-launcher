@@ -68,10 +68,18 @@ class ReadmeUpdater(UpdaterBase):
         Starts the update process.
         """
 
-        with importlib.resources.path(
-            "ultimate_hosts_blacklist.test_launcher.data.docs", "about_repository.md"
-        ) as file_path:
-            content = FileHelper(str(file_path)).read()
+        if self.administration.raw_link:
+            with importlib.resources.path(
+                "ultimate_hosts_blacklist.test_launcher.data.docs",
+                "about_repository.md",
+            ) as file_path:
+                content = FileHelper(str(file_path)).read()
+        else:
+            with importlib.resources.path(
+                "ultimate_hosts_blacklist.test_launcher.data.docs",
+                "about_repository_self.md",
+            ) as file_path:
+                content = FileHelper(str(file_path)).read()
 
         content += "\n\n"
 
