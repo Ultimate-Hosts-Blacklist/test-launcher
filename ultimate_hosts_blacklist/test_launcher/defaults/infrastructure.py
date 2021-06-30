@@ -100,3 +100,22 @@ REQUIREMENTS_FILE_CONTENT: List[str] = [
     "PyFunceble-dev",
     "ultimate-hosts-blacklist-test-launcher",
 ]
+
+AUTOMATED_ISSUE_REPOSITORY: str = "Ultimate-Hosts-Blacklist/dev-center"
+AUTOMATED_ISSUE_ASSIGNEE: str = "funilrys"
+
+AUTOMATED_ISSUE_TEMPLATE: str = """An error occurred while testing [%(name)s](https://github.com/Ultimate-Hosts-Blacklist/%(name)s).
+Please take the time to fix it.
+
+Detail:
+
+```
+%(error_detail)s
+```
+
+Kind regards
+
+
+_P.S.: This issue was automatically submitted._
+
+"""  # noqa: E501

@@ -35,12 +35,17 @@ License:
     SOFTWARE.
 """
 
+import sys
+import traceback
 from typing import Optional
 
+from github import Github
 from PyFunceble.cli.processes.producer import ProducerProcessesManager
 from PyFunceble.cli.processes.tester import TesterProcessesManager
+from PyFunceble.helpers.environment_variable import EnvironmentVariableHelper
 
 from ultimate_hosts_blacklist.test_launcher.administration import Administration
+from ultimate_hosts_blacklist.test_launcher.defaults import infrastructure
 from ultimate_hosts_blacklist.test_launcher.pyfunceble.system_launcher import (
     UHBPyFuncebleSystemLauncher,
 )
@@ -73,6 +78,8 @@ class Orchestration:
 
     tester_process_manager: Optional[TesterProcessesManager] = None
     producer_process_manager: Optional[ProducerProcessesManager] = None
+    github_api: Optional[Github] = None
+    kill_switch: Optional[EnvironmentVariableHelper] = None
 
     def __init__(
         self,
@@ -84,11 +91,48 @@ class Orchestration:
             administration=self.administration
         )
 
+        env_helper = EnvironmentVariableHelper("GITHUB_TOKEN")
+        self.kill_switch = EnvironmentVariableHelper("UHB_GH_KILL_SWITCH")
+
+        self.github_api = Github(env_helper.get_value(default=None))
+
+    def submit_error_issue(self, *, trace: str) -> None:
+        """
+        Submits an issue to the dev-center.
+
+        :param trace:
+            The traceback to embed inside the issue.
+        """
+
+        issue_title = f"[ERROR] An error occurred in {self.administration.name}"
+
+        issue_body = infrastructure.AUTOMATED_ISSUE_TEMPLATE % {
+            "name": self.administration.name,
+            "error_detail": trace,
+        }
+
+        if not self.kill_switch.get_value():
+            repository = self.github_api.get_repo(
+                infrastructure.AUTOMATED_ISSUE_REPOSITORY
+            )
+
+            repository.create_issue(
+                title=issue_title,
+                assignee=infrastructure.AUTOMATED_ISSUE_ASSIGNEE,
+                body=issue_body,
+            )
+        else:
+            print(issue_body)
+            sys.exit(1)
+
     def start(self) -> "Orchestration":
         """
         Starts the whole process of orchestration.
         """
 
-        self.system_launcher.start()
+        try:
+            self.system_launcher.start()
+        except Exception:
+            self.submit_error_issue(trace=traceback.format_exc())
 
         return self
