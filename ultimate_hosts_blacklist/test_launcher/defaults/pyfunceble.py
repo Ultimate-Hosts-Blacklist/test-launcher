@@ -63,7 +63,7 @@ CONFIGURATION = {
         "whois_db": True,
         "autocontinue": True,
         "preload_file": False,
-        "cooldown_time": 0.2,
+        "cooldown_time": 0.09,
         "ci": {
             "active": Jenkins().guess_all_settings().authorized
             or GitHubActions().guess_all_settings().authorized,
