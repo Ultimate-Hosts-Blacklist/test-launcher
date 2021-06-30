@@ -40,7 +40,7 @@ import os
 import tempfile
 from typing import List, Set, Tuple, Union
 
-from PyFunceble.cli.utils.sort import standard as standard_sorting
+from PyFunceble.cli.processes.workers import file_sorter_base
 from PyFunceble.cli.utils.testing import get_subjects_from_line
 from PyFunceble.helpers.download import DownloadHelper
 from PyFunceble.helpers.file import FileHelper
@@ -222,9 +222,14 @@ class OutputFilesUpdater(UpdaterBase):
             pass
 
         logging.info("Started to update: %r", self.final_destination)
+
         FileHelper(self.final_destination).write(
-            "\n".join(sorted(to_write, key=standard_sorting)) + "\n", overwrite=True
+            "\n".join(to_write) + "\n", overwrite=True
         )
+        file_sorter_base.FileSorterWorkerBase.process_file_sorting(
+            self.final_destination, remove_duplicates=True, write_header=False
+        )
+
         logging.info("Finished to update: %r", self.final_destination)
 
         if removed:
