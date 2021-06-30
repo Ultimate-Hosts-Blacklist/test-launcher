@@ -165,7 +165,12 @@ class OutputFilesUpdater(UpdaterBase):
         Removed the removed entries from all files to clean.
         """
 
+        file_helper = FileHelper()
+
         for file in self.files_to_clean:
+            if not file_helper.set_path(file).exists():
+                continue
+
             logging.info(
                 "Started to cleanup: %r",
                 file,
