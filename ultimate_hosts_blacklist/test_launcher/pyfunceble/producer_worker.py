@@ -57,7 +57,7 @@ class UHBPyFuncebleProducerWorker(ProducerWorker):
             ):
 
                 FileHelper(outputs.TEMP_VOLATIVE_DESTINATION).write(
-                    test_result.idna_subject
+                    test_result.idna_subjects + "\n"
                 )
 
         return result
