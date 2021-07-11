@@ -110,9 +110,7 @@ class UHBPyFuncebleSystemLauncher(SystemLauncher):
                     if line.endswith("."):
                         line = line[:-1]
 
-                    clean_file_stream.write(line + "\n")
-
-                clean_file_stream.write("\n")
+                    clean_file_stream.write("\n" + line)
 
             logging.info("Finished generation of %r.", clean_file.path)
 
