@@ -57,12 +57,16 @@ LINKS_DEV: dict = {
 LINKS: dict = dict(LINKS_DEV)
 
 CONFIGURATION = {
-    "lookup": {"timeout": 5.0, "reputation": False},
-    "share_logs": True,
+    "lookup": {
+        "timeout": 5.0,
+        "reputation": False,
+        "collection": True,
+    },
+    "share_logs": False,
     "cli_testing": {
         "whois_db": True,
         "autocontinue": True,
-        "preload_file": True,
+        "preload_file": False,
         "cooldown_time": 0.09,
         "ci": {
             "active": Jenkins().guess_all_settings().authorized
@@ -91,6 +95,10 @@ CONFIGURATION = {
         if not Jenkins().guess_all_settings().authorized
         and not GitHubActions().guess_all_settings().authorized
         else 1,
+    },
+    "collection": {
+        "push": True,
+        "url_base": "https://collection.dead-hosts.funilrys.com",
     },
     "dns": {
         "server": ["9.9.9.10", "149.112.112.10", "2620:fe::10"],
