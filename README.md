@@ -32,9 +32,9 @@ Crafted with ♥ by Nissar Chababy (Funilrys)
 ```
 MIT License
 
-Copyright (c) 2017-2024 Mitchell Krog - @mitchellkrogza
-Copyright (c) 2017-2024 Nissar Chababy - @funilrys
-Copyright (c) 2017-2024 Ultimate Hosts Blacklist - @Ultimate-Hosts-Blacklist Contributors
+Copyright (c) 2019-2024 Mitchell Krog - @mitchellkrogza
+Copyright (c) 2019-2024 Nissar Chababy - @funilrys
+Copyright (c) 2019-2024 Ultimate Hosts Blacklist - @Ultimate-Hosts-Blacklist Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
