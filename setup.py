@@ -83,7 +83,7 @@ def get_long_description():  # pragma: no cover
     This function return the long description.
     """
 
-    with open("README.rst", encoding="utf-8") as file_stream:
+    with open("README.md", encoding="utf-8") as file_stream:
         return file_stream.read()
 
 
@@ -94,6 +94,7 @@ if __name__ == "__main__":
         install_requires=get_requirements(),
         description="The test launcher of the Ultimate-Hosts-Blacklist project.",
         long_description=get_long_description(),
+        long_description_content_type="text/markdown",
         license="MIT",
         url="https://github.com/Ultimate-Hosts-Blacklist/test-launcher",
         project_urls={
