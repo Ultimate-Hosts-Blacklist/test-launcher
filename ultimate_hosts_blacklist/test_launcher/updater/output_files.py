@@ -65,8 +65,9 @@ class OutputFilesUpdater(UpdaterBase):
             outputs.WHITELISTED_DESTINATION,
         ]
 
+        # pylint: disable=consider-using-with
         self.download_temp_file = tempfile.NamedTemporaryFile(mode="r", delete=False)
-
+        # pylint: disable=consider-using-with
         self.whitelist_list = tempfile.NamedTemporaryFile(mode="r", delete=False)
 
         super().__init__(administration)

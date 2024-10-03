@@ -56,7 +56,7 @@ class Administration:
 
     info_file_location: Optional[str] = None
     info_file_helper: Optional[FileHelper] = None
-    __our_info: dict = dict()
+    __our_info: dict = {}
 
     def __init__(self) -> None:
         self.info_file_location = outputs.ADMINISTRATION_DESTINATION
@@ -101,7 +101,9 @@ class Administration:
         return self.info_file_helper.exists()
 
     @staticmethod
-    def convert_data_for_system(data: dict) -> dict:
+    def convert_data_for_system(
+        data: dict,
+    ) -> dict:
         """
         Given the content of the info file, we convert it into something our
         system may understand.
@@ -114,7 +116,7 @@ class Administration:
             The data to work with.
         """
 
-        result = dict()
+        result = {}
 
         for key, value in dict(data).items():
             if key in infrastructure.ADMINISTRATION_INDEXES["delete"]:
@@ -158,7 +160,7 @@ class Administration:
                     elif sanitize_type == "int":
                         local_result = 0
                     elif sanitize_type == "dict":
-                        local_result = dict()
+                        local_result = {}
                     elif sanitize_type == "datetime":
                         local_result = datetime.utcnow() - timedelta(days=365.25)
                     elif sanitize_type == "epoch":
@@ -184,7 +186,7 @@ class Administration:
             The data to work with.
         """
 
-        result = dict()
+        result = {}
 
         for key, value in dict(data).items():
             if key in infrastructure.ADMINISTRATION_INDEXES["delete"]:
@@ -215,7 +217,7 @@ class Administration:
             return self.convert_data_for_system(
                 DictHelper().from_json(content, return_dict_on_error=False)
             )
-        return dict()
+        return {}
 
     def save(self) -> None:
         """

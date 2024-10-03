@@ -132,7 +132,7 @@ class Orchestration:
 
         try:
             self.system_launcher.start()
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             self.submit_error_issue(trace=traceback.format_exc())
 
         return self

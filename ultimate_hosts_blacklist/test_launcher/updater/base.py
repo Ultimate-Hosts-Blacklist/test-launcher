@@ -51,7 +51,7 @@ class UpdaterBase:
     def __init__(self, administration: Administration) -> None:
         self.administration = administration
 
-    def execute_if_authorized(func):
+    def execute_if_authorized(func):  # pylint: disable=no-self-argument
         """
         Launches the decorated method only if we are authorized to process.
         """
@@ -59,6 +59,7 @@ class UpdaterBase:
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             if self.authorized:
+                # pylint: disable=not-callable
                 return func(self, *args, **kwargs)
             return None
 

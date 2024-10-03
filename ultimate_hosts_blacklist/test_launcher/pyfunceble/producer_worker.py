@@ -45,6 +45,10 @@ from ultimate_hosts_blacklist.test_launcher.defaults import outputs
 
 
 class UHBPyFuncebleProducerWorker(ProducerWorker):
+    """
+    Provides a modified version of PyFunceble's producer worker.
+    """
+
     def target(self, consumed: Any) -> Optional[Tuple[Any, ...]]:
         result = super().target(consumed)
 

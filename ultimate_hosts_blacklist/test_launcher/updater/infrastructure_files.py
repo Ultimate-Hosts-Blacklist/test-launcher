@@ -63,8 +63,6 @@ class InfrastructureFilesUpdater(UpdaterBase):
         Provides the authorization to launch.
         """
 
-        return True
-
         return not FileHelper(
             os.path.join(
                 outputs.CURRENT_DIRECTORY, outputs.EXAMPLE_ADMINISTRATION_FILENAME
@@ -120,6 +118,7 @@ class InfrastructureFilesUpdater(UpdaterBase):
             random_minute = secrets.randbelow(59)
             random_hour = secrets.randbelow(12)
 
+            # pylint: disable=consider-using-f-string
             new_data = re.sub(
                 r'cron: "\d+\s\d+\s(\*\s\*\s\*)"',
                 r'cron: "{0} {1} \1"'.format(random_minute, random_hour),

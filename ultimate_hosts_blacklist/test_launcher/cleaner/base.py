@@ -46,10 +46,15 @@ class CleanerBase:
 
     STD_FILES_TO_IGNORE: List[str] = [".keep", ".gitingore"]
 
-    def execute_if_authorized(func):
+    def execute_if_authorized(func):  # pylint: disable=no-self-argument
+        """
+        Executes the decorated method only if the authorization is granted.
+        """
+
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             if self.authorized:
+                # pylint: disable=not-callable
                 return func(self, *args, **kwargs)
             return None
 

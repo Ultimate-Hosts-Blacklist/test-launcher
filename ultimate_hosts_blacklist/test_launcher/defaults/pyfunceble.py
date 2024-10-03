@@ -91,10 +91,12 @@ CONFIGURATION = {
             "syntax": False,
             "reputation": False,
         },
-        "max_workers": None
-        if not Jenkins().guess_all_settings().authorized
-        and not GitHubActions().guess_all_settings().authorized
-        else 1,
+        "max_workers": (
+            None
+            if not Jenkins().guess_all_settings().authorized
+            and not GitHubActions().guess_all_settings().authorized
+            else 1
+        ),
     },
     "collection": {
         "push": True,

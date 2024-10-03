@@ -36,6 +36,8 @@ License:
     SOFTWARE.
 """
 
+# pylint: disable=line-too-long
+
 import os
 from typing import Dict, List
 
@@ -70,7 +72,7 @@ CENTRAL_LINKS: dict = {
     "issue_template_config": {
         "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.github/ISSUE_TEMPLATE/config.yml",  # noqa: E501
         "destination": os.path.join(".github", "ISSUE_TEMPLATE", "config.yml"),
-    }
+    },
 }
 
 LINKS_STABLE: dict = {}
@@ -116,6 +118,7 @@ REQUIREMENTS_FILE_CONTENT: List[str] = [
 AUTOMATED_ISSUE_REPOSITORY: str = "Ultimate-Hosts-Blacklist/dev-center"
 AUTOMATED_ISSUE_ASSIGNEE: str = "funilrys"
 
+# pylint: disable=line-too-long
 AUTOMATED_ISSUE_TEMPLATE: str = """An error occurred while testing [%(name)s](https://github.com/Ultimate-Hosts-Blacklist/%(name)s).
 Please take the time to fix it.
 

@@ -54,6 +54,9 @@ from ultimate_hosts_blacklist.test_launcher.pyfunceble.producer_worker import (
 
 
 class UHBPyFuncebleSystemLauncher(SystemLauncher):
+    """
+    Provides a modified version of PyFunceble's system launcher.
+    """
 
     uhb_administration: Optional[Administration] = None
 
@@ -232,9 +235,9 @@ class UHBPyFuncebleSystemLauncher(SystemLauncher):
 
         end_datetime = datetime.utcnow()
 
-        self.uhb_administration.end_epoch = (
-            self.uhb_administration.end_datetime
-        ) = end_datetime
+        self.uhb_administration.end_epoch = self.uhb_administration.end_datetime = (
+            end_datetime
+        )
 
         self.uhb_administration.save()
 
