@@ -124,6 +124,7 @@ dmypy.json
 
 # Project oriented.
 .PyFunceble*
+.pyfunceble*
 *.list
 dir_structure*.json
 iana-*.json
