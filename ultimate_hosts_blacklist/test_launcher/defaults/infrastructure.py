@@ -59,6 +59,18 @@ CENTRAL_LINKS: dict = {
         "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.gitattributes",  # noqa: E501
         "destination": ".gitattributes",
     },
+    "funding": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.github/FUNDING.yml",  # noqa: E501
+        "destination": os.path.join(".github", "FUNDING.yml"),
+    },
+    "issue_template_bug_report": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.github/ISSUE_TEMPLATE/00-bug.yml",  # noqa: E501
+        "destination": os.path.join(".github", "ISSUE_TEMPLATE", "00-bug.yml"),
+    },
+    "issue_template_config": {
+        "link": "https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/template/master/.github/ISSUE_TEMPLATE/config.yml",  # noqa: E501
+        "destination": os.path.join(".github", "ISSUE_TEMPLATE", "config.yml"),
+    }
 }
 
 LINKS_STABLE: dict = {}

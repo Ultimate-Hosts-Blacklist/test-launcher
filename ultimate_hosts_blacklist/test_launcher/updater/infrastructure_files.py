@@ -79,12 +79,20 @@ class InfrastructureFilesUpdater(UpdaterBase):
 
         for file in infrastructure.LINKS.values():
             destination = os.path.join(outputs.CURRENT_DIRECTORY, file["destination"])
+
+            parent_directory = os.path.dirname(destination)
+            os.makedirs(parent_directory, exist_ok=True)
+
             DownloadHelper(file["link"]).download_text(destination=destination)
 
             logging.info("Updated: %r", destination)
 
         for file in pyfunceble.LINKS.values():
             destination = os.path.join(outputs.CURRENT_DIRECTORY, file["destination"])
+
+            parent_directory = os.path.dirname(destination)
+            os.makedirs(parent_directory, exist_ok=True)
+
             DownloadHelper(file["link"]).download_text(destination=destination)
 
             logging.info("Updated: %r", destination)

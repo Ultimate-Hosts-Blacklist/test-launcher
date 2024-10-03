@@ -135,7 +135,7 @@ class Administration:
             elif key in infrastructure.ADMINISTRATION_INDEXES["datetime"]:
                 try:
                     result[key] = datetime.fromisoformat(value)
-                except ValueError:
+                except (ValueError, TypeError):
                     result[key] = datetime.utcnow()
             elif key in infrastructure.ADMINISTRATION_INDEXES["epoch"]:
                 result[key] = datetime.fromtimestamp(value)
